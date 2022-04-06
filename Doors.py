@@ -146,6 +146,9 @@ class Environment:
         else:
             return ' '
 
+    def is_terminal(self):
+        return self.terminal_state
+
     def door01_char(self):
         return "O" if self.door01_is_open else "c"
 
@@ -172,10 +175,10 @@ if __name__ == '__main__':
     # actions = ['right','right','right','down','down','down','down','left','left','left']
 
     # testing trajectory through doors opening doors and leaving them open
-    #actions = ['down', 'toggle_door', 'down', 'down', 'toggle_door', 'down', 'down']
+    actions = ['down', 'toggle_door', 'down', 'down', 'toggle_door', 'down', 'down']
 
     # testing trajectory through doors opening doors and closing them
-    actions = ['down', 'toggle_door', 'down', 'toggle_door', 'down','toggle_door', 'down', 'toggle_door', 'down']
+    # actions = ['down', 'toggle_door', 'down', 'toggle_door', 'down','toggle_door', 'down', 'toggle_door', 'down']
 
 
     observation = e.env_start()
