@@ -7,9 +7,8 @@
 #  (in fact for simplicity of implementation, this code does include that value as the
 #  final element of the reward vector, but the agents are implemented to ignore it).
 #  Our implementation also provides a potential-based impact-minimising reward as the 2nd
-#  element in the vector, for use by our impact-minimising agent). Again in a clean
-#  implementation this should probably be calculated by the agent itself, but this
-#  approach is faster for me to implement, given pressing conference deadlines
+#  element in the vector, for use by our impact-minimising agent). According to Vamplew, in a clean
+#  implementation this should probably be calculated by the agent itself
 
 class Environment:
 

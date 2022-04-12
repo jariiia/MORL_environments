@@ -1,4 +1,6 @@
-# This is a sample Python script
+# This is an implementation of the Doors environment described in the article
+# 'Potential-based multiobjective reinforcement learning approaches to low-impact agents for AI safety'
+# by Vamplew et al at Engineering Applications of Artificial Intelligence Volume 100, April 2021, 104186
 
 class Environment:
 
