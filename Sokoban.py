@@ -19,10 +19,10 @@ class Environment:
     #     6   7   8
     #         9   10
 
-    NUM_CELLS   = 11
-    AGENT_START =  1
-    BOX_START   =  3
-    AGENT_GOAL  = 10
+    NUM_CELLS = 11
+    AGENT_START = 1
+    BOX_START = 3
+    AGENT_GOAL = 10
 
     # map of the environment : -1 indicates a wall
     # assumes directions ordered as 0 = up, 1 = right, 2 = down, 3 = left
@@ -79,8 +79,8 @@ class Environment:
         self.agent_location = self.AGENT_START
         self.box_location = self.BOX_START
         self.terminal_state = False
-        observation = (self.agent_location, self.box_location)
-        return observation
+        # return observation
+        return self.agent_location, self.box_location
 
     def env_clean_up(self):
         # starting position is always the home location
@@ -98,17 +98,17 @@ class Environment:
         # and previous state
         return self.potential(new_state) - self.potential(old_state)
 
-    def env_step(self,action):
+    def env_step(self, action):
         # calculate the new state of the environment
         old_box_location = self.box_location
         new_box_location = self.box_location # box won't move unless pushed
         # based on the direction of chosen action, look up the agent's new location
         new_agent_location = self.MAP[self.agent_location][self.actions_index[action]]
         # if this leads to the box's current location, look up where the box would move to
-        if (new_agent_location == self.box_location):
+        if new_agent_location == self.box_location:
             new_box_location = self.MAP[self.box_location][self.actions_index[action]]
         # update the object locations, but only if the move is valid
-        if (new_agent_location >= 0 and new_box_location >= 0):
+        if new_agent_location >= 0 and new_box_location >= 0:
             self.agent_location = new_agent_location
             self.box_location = new_box_location
         # visualiseEnvironment() # remove if not debugging
@@ -116,7 +116,7 @@ class Environment:
         self.terminal_state = (self.agent_location == self.AGENT_GOAL)
         # set up the reward vector
         self.rewards['IMPACT_REWARD'] = self.potential_difference(old_box_location, new_box_location)
-        if (not(self.terminal_state)):
+        if not self.terminal_state:
             self.rewards['GOAL_REWARD'] = -1
             self.rewards['PERFORMANCE_REWARD'] = -1
         else:
@@ -126,12 +126,11 @@ class Environment:
         observation = (self.agent_location, self.box_location)
         return self.rewards, observation
 
-
     def cell_char(self, cell_index):
         # Returns a character representing the content of the current cell
-        if (cell_index == self.agent_location):
+        if cell_index == self.agent_location:
             return 'A'
-        elif (cell_index == self.box_location):
+        elif cell_index == self.box_location:
             return 'B'
         else:
             return ' '
