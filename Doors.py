@@ -125,11 +125,11 @@ class Environment:
                 self.door23_is_open = not(self.door23_is_open)
         new_doors_open_count = int(self.door01_is_open) + int(self.door23_is_open)
         # is this a terminal state?
-        terminal_state = (self.agent_location == self.AGENT_GOAL)
+        self.terminal_state = (self.agent_location == self.AGENT_GOAL)
         # set up the reward vector
         self.rewards['IMPACT_REWARD'] = self.potential_difference(self.doors_open_count, new_doors_open_count)
         self.doors_open_count = new_doors_open_count
-        if (not(terminal_state)):
+        if (not(self.terminal_state)):
             self.rewards['GOAL_REWARD'] = -1
             self.rewards['PERFORMANCE_REWARD'] = -1
         else:
@@ -190,4 +190,7 @@ if __name__ == '__main__':
         print('Action:', a)
         print('Rewards:', rewards)
         print('Observation', observation)
+
+    print("\nIs terminal?", e.is_terminal())
+
 
