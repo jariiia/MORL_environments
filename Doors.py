@@ -48,7 +48,6 @@ class Environment:
         self.actions_index = {'up': 0, 'right': 1, 'down': 2, 'left': 3, 'toggle_door': 4}
         self.initial_rewards = [0, 0, 0]
         self.rewards = dict(zip(self.objectives, self.initial_rewards))
-        self.terminal_state = False
         self.doors_open_count = 0
         self.terminal_state = False
 
