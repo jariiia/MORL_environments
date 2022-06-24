@@ -46,7 +46,7 @@ class Breakable_bottles_environment:
 
     MAX_BOTTLES = 2
     BOTTLES_TO_DELIVER = 2
-    DROP_PROBABILITY = 0.1
+    DROP_PROBABILITY = 0.5
 
     # define the ordering of the objectives
     NUM_OBJECTIVES = 3
@@ -192,7 +192,7 @@ if __name__ == '__main__':
     e = Breakable_bottles_environment()
 
     # testing trajectory through doors opening doors and leaving them open
-    actions = ['pick_up_bottle', 'right', 'right', 'right', 'right','left', 'left', 'left', 'left','pick_up_bottle', 'right', 'right', 'right', 'right']
+    actions = ['pick_up_bottle','pick_up_bottle', 'right', 'right', 'right', 'right','left', 'left', 'left', 'left','pick_up_bottle', 'right', 'right', 'right', 'right']
 
     e.env_start()
 
