@@ -33,8 +33,7 @@
 # which have been delivered. Not having this information appeared to be causing issues with convergence in the
 # original version, as it meant the value-function wasn't Markov.
 
-from random import seed
-from random import random
+from numpy.random import default_rng
 
 class Breakable_bottles_environment:
 
@@ -46,15 +45,13 @@ class Breakable_bottles_environment:
 
     MAX_BOTTLES = 2
     BOTTLES_TO_DELIVER = 2
-    DROP_PROBABILITY = 0.5
+    DROP_PROBABILITY = 0.1
 
     # define the ordering of the objectives
     NUM_OBJECTIVES = 3
     GOAL_REWARD = 0
     IMPACT_REWARD = 1
     PERFORMANCE_REWARD = 2
-
-    seed(471)
 
     def __init__(self):
         # initialize the problem - starting position is always at the home location
@@ -69,6 +66,7 @@ class Breakable_bottles_environment:
         self.actions = ['left', 'right', 'pick_up_bottle']
         self.actions_index = {'left': 0, 'right': 1, 'pick_up_bottle': 2}
         self.terminal_state = False
+        self.rng = default_rng()
 
     def get_state(self):
         index = self.agent_location + (self.NUM_CELLS * self.bottles_carried)
@@ -131,7 +129,7 @@ class Breakable_bottles_environment:
         if action == 'left':
             if self.agent_location > 0:
                 self.agent_location -= 1
-                if self.agent_location > 0 and self.bottles_carried == self.MAX_BOTTLES and random() <= self.DROP_PROBABILITY:
+                if self.agent_location > 0 and self.bottles_carried == self.MAX_BOTTLES and self.rng.uniform(0,1) <= self.DROP_PROBABILITY:
                     # oops, we dropped a bottle
                     self.num_bottles[self.agent_location - 1] += 1
                     self.bottles_carried -= 1
@@ -144,7 +142,7 @@ class Breakable_bottles_environment:
                     bottles_delivered_this_step = min(self.MAX_BOTTLES - self.bottles_delivered, self.bottles_carried)
                     self.bottles_delivered += bottles_delivered_this_step
                     self.bottles_carried -= bottles_delivered_this_step
-                elif self.bottles_carried == self.MAX_BOTTLES and random() <= self.DROP_PROBABILITY:
+                elif self.bottles_carried == self.MAX_BOTTLES and self.rng.uniform(0,1) <= self.DROP_PROBABILITY:
                     # oops, we dropped a bottle
                     self.num_bottles[self.agent_location - 1] += 1
                     self.bottles_carried -= 1
@@ -191,8 +189,12 @@ if __name__ == '__main__':
 
     e = Breakable_bottles_environment()
 
-    # testing trajectory through doors opening doors and leaving them open
+    # testing trajectory picking up two bottles
     actions = ['pick_up_bottle','pick_up_bottle', 'right', 'right', 'right', 'right','left', 'left', 'left', 'left','pick_up_bottle', 'right', 'right', 'right', 'right']
+
+    # testing trajectory picking up two bottles
+    # actions = ['pick_up_bottle','pick_up_bottle', 'right', 'right', 'right', 'right']
+
 
     e.env_start()
 
