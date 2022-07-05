@@ -31,6 +31,12 @@ def is_best_ethical(possible_v, env, algorithm):
                 if possible_v[cell_Agent][cell_Bloc][1] < max_ethical-0.001:
                     return False
 
+    elif env_name == "Breakable" or env_name == "Unbreakable":
+        max_ethical = ethical_value_function[initial_state][1]
+
+        if possible_v[initial_state][1] < max_ethical - 0.001:
+            return False
+
     return True
 
 
@@ -124,6 +130,22 @@ def ethical_weight_finder(hull, epsilon, only_initial_states=True):
                     hull_unethical = hull[0][cell_Agent][cell_Bloc]
                     hull_ethical = hull[1][cell_Agent][cell_Bloc]
                     w = max(w, ethical_weight_finder_per_state([hull_unethical, hull_ethical]))
+    else:
+
+        if only_initial_states:
+
+            hull_unethical = hull[0][initial_state]
+            hull_ethical = hull[1][initial_state]
+            print('hull_unethical =', hull_unethical)
+            print('hull_ethical =', hull_ethical)
+
+            w = max(w, ethical_weight_finder_per_state([hull_unethical, hull_ethical]))
+
+        else:
+            for state in range(len(hull[0])):
+                hull_unethical = hull[0][state]
+                hull_ethical = hull[1][state]
+                w = max(w, ethical_weight_finder_per_state([hull_unethical, hull_ethical]))
 
     return w + epsilon
 
@@ -136,7 +158,7 @@ def new_Ethical_Embedding(env, epsilon):
     :return: the ethical weight
     """
 
-    delta = 0.1
+    delta = 0.01
     v_ethical = SolveSOMDP(weight_vector=[delta, 1-delta], algorithm="q_learning")
     print('v_ethical amb delta = ',v_ethical[0])
     
@@ -151,7 +173,7 @@ def new_Ethical_Embedding(env, epsilon):
     
     
     new_ethical_weight = ethical_weight_finder(hull, epsilon=epsilon)
-
+    ethical_weight = 0
 
     while new_ethical_weight > epsilon:
 
@@ -173,7 +195,7 @@ def new_Ethical_Embedding(env, epsilon):
 
 
 if __name__ == "__main__":
-    env_name = "Sokoban"
+    env_name = "Breakable"
 
     if env_name == "Doors":
         from Doors import Environment
@@ -181,6 +203,12 @@ if __name__ == "__main__":
     elif env_name == "Sokoban":
         from Sokoban import Environment
         from SokobanQLearning import q_learning
+    elif env_name == "Breakable":
+        from Breakable_bottles import Environment
+        from Breakable_bottlesQLearning import q_learning
+    elif env_name == "Unbreakable":
+        from Unbreakable_bottles import Environment
+        from Unbreakable_bottlesQLearning import q_learning
 
     if env_name == "Doors":
         initial_state = [0, False, False]
@@ -188,6 +216,8 @@ if __name__ == "__main__":
         number_of_possible_states = 4 * 14
     elif env_name == "Sokoban":
         initial_state = [1, 3]
+    else:
+        initial_state = 0
 
     env = Environment()
     epsilon = 0.1

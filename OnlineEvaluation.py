@@ -9,6 +9,10 @@ def generate_graphic_for_environment(environment):
         from DoorsQLearning import q_learning, ethical_weight
     elif environment == "Sokoban":
         from SokobanQLearning import q_learning, ethical_weight
+    elif environment == "Breakable":
+        from Breakable_bottlesQLearning import q_learning, ethical_weight
+    elif environment == "Unbreakable":
+        from Unbreakable_bottlesQLearning import q_learning, ethical_weight
 
     weights = [1, ethical_weight]
 
@@ -76,6 +80,10 @@ def generate_graphic_for_environment(environment):
         individual_limit = 43
     elif environment == "Sokoban":
         individual_limit = 40
+    elif environment == "Breakable":
+        individual_limit = 36
+    elif environment == "Unbreakable":
+        individual_limit = 43.7
 
     plt.axhline(y=individual_limit, color = 'tomato', label = 'Reward individual política ètica')
     plt.axhline(y=0, color = 'palegreen', label = 'Reward ètic política ètica')
@@ -89,5 +97,5 @@ def generate_graphic_for_environment(environment):
 
 if __name__ == '__main__':
 
-    env_name = "Sokoban"
+    env_name = "Breakable"
     generate_graphic_for_environment(env_name)

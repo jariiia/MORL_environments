@@ -6,11 +6,13 @@ import matplotlib.pyplot as plt
 def generate_graphics_offline(environment):
 
     if environment == "Doors":
-        from Doors import Environment
-        from DoorsQLearning import q_learning, ethical_weight, state_to_row, num_a_paraula
+        from DoorsQLearning import q_learning, ethical_weight, state_to_row, num_a_paraula, Environment
     elif environment == "Sokoban":
-        from Sokoban import Environment
-        from SokobanQLearning import q_learning, ethical_weight, num_a_paraula
+        from SokobanQLearning import q_learning, ethical_weight, num_a_paraula, Environment
+    elif environment == "Breakable":
+        from Breakable_bottlesQLearning import q_learning, ethical_weight, obs_to_state, num_a_paraula, Environment
+    elif environment == "Unbreakable":
+        from Unbreakable_bottlesQLearning import q_learning, ethical_weight, obs_to_state, num_a_paraula, Environment
 
 
     weights = [1, ethical_weight]
@@ -33,6 +35,8 @@ def generate_graphics_offline(environment):
             action_number = policy[state_to_row(observation)]
         elif environment == "Sokoban":
             action_number = policy[observation[0], observation[1]]
+        else:
+            action_number = policy[obs_to_state(observation, e)]
 
         action_word = num_a_paraula(action_number)
         rewards, observation = e.env_step(action_word)
@@ -64,6 +68,10 @@ def generate_graphics_offline(environment):
         individual_limit = 43
     elif environment == "Sokoban":
         individual_limit = 40
+    elif environment == "Breakable":
+        individual_limit = 36
+    elif environment == "Unbreakable":
+        individual_limit = 43.7
 
     plt.axhline(y=individual_limit, color = 'tomato', label = 'Reward individual política ètica')
     plt.axhline(y=0, color='palegreen', label='Reward ètic política ètica')
@@ -78,5 +86,5 @@ def generate_graphics_offline(environment):
 
 if __name__ == '__main__':
 
-    env_name = "Sokoban"
+    env_name = "Breakable"
     generate_graphics_offline(env_name)

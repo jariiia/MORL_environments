@@ -35,7 +35,7 @@
 
 from numpy.random import default_rng
 
-class Breakable_bottles_environment:
+class Environment:
 
     NUM_CELLS = 5
     NUM_INTERMEDIATE_CELLS = NUM_CELLS -2
@@ -99,7 +99,7 @@ class Breakable_bottles_environment:
         self.num_bottles = [0 for i in range(self.NUM_INTERMEDIATE_CELLS)]
         self.bottles_on_floor = 0
         self.terminal_state = False
-        observation = (self.agent_location, self.bottles_carried, self.bottles_delivered)
+        observation = (self.agent_location, self.bottles_carried, self.num_bottles, self.bottles_delivered)
         return observation
 
     def env_clean_up(self):
@@ -190,6 +190,7 @@ class Breakable_bottles_environment:
         print('Destination D, bottles delivered = ' + str(self.bottles_delivered))
         print('----------------------------------')
 
+
 if __name__ == '__main__':
 
     e = Breakable_bottles_environment()
@@ -209,5 +210,8 @@ if __name__ == '__main__':
         print('Action:', a)
         print('Rewards:', rewards)
         print('Observation', observation)
+        print("aaaaaaaaaaa")
+        print(e.get_state())
+        print("eeeeeeeee")
 
     print("\nIs terminal?", e.is_terminal())
