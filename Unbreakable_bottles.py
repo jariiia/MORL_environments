@@ -193,7 +193,7 @@ class Environment:
 
 if __name__ == '__main__':
 
-    e = Breakable_bottles_environment()
+    e = Environment()
 
     # testing trajectory picking up two bottles and picking bottles that dropped on the way back
     actions = ['pick_up_bottle','pick_up_bottle', 'right', 'right', 'right', 'right','left', 'pick_up_bottle', 'left', 'pick_up_bottle', 'left', 'pick_up_bottle', 'right', 'right', 'right', 'right']
