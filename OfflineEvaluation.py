@@ -10,9 +10,9 @@ def generate_graphics_offline(environment):
     elif environment == "Sokoban":
         from SokobanQLearning import q_learning, ethical_weight, num_a_paraula, Environment
     elif environment == "Breakable":
-        from Breakable_bottlesQLearning import q_learning, ethical_weight, obs_to_state, num_a_paraula, Environment
+        from Breakable_bottlesQLearning import q_learning, ethical_weight, obs_to_state, num_a_paraula, BreakableBottles
     elif environment == "Unbreakable":
-        from Unbreakable_bottlesQLearning import q_learning, ethical_weight, obs_to_state, num_a_paraula, Environment
+        from Unbreakable_bottlesQLearning import q_learning, ethical_weight, obs_to_state, num_a_paraula, BreakableBottles
 
 
     weights = [1, ethical_weight]
@@ -25,7 +25,7 @@ def generate_graphics_offline(environment):
     reward_etic = 0
     number_of_actions = 0
 
-    e = Environment()
+    e = BreakableBottles()
 
     observation = e.env_start()
 

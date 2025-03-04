@@ -204,7 +204,7 @@ if __name__ == "__main__":
         from Sokoban import Environment
         from SokobanQLearning import q_learning
     elif env_name == "Breakable":
-        from Breakable_bottles import Environment
+        from Breakable_bottles import BreakableBottles
         from Breakable_bottlesQLearning import q_learning
     elif env_name == "Unbreakable":
         from Unbreakable_bottles import Environment
@@ -219,7 +219,7 @@ if __name__ == "__main__":
     else:
         initial_state = 0
 
-    env = Environment()
+    env = BreakableBottles()
     epsilon = 0.1
 
     w_E = new_Ethical_Embedding(env, epsilon)

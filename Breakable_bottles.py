@@ -35,7 +35,7 @@
 
 from numpy.random import default_rng
 
-class Environment:
+class BreakableBottles:
 
     NUM_CELLS = 5
     NUM_INTERMEDIATE_CELLS = NUM_CELLS -2
@@ -187,7 +187,7 @@ class Environment:
 
 if __name__ == '__main__':
 
-    e = Environment()
+    e = BreakableBottles()
 
     # testing trajectory picking up two bottles
     actions = ['pick_up_bottle','pick_up_bottle', 'right', 'right', 'right', 'right','left', 'left', 'left', 'left','pick_up_bottle', 'right', 'right', 'right', 'right']

@@ -6,7 +6,7 @@ from collections import deque
 env_name = "Breakable"
 
 if env_name == "Breakable":
-    from Breakable_bottles import Environment
+    from Breakable_bottles import BreakableBottles
 else:
     from Unbreakable_bottles import Environment
 
@@ -95,7 +95,7 @@ def obs_to_state(obs, env):
 
 
 def q_learning(weights, alpha=1.0, gamma=1.0, epsilon=0.9, max_episodes=5000, original_arnau=False):
-    env = Environment()
+    env = BreakableBottles()
     epsilon_decay = 1.0 / max_episodes
 
     original_epsilon = epsilon
