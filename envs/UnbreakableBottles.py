@@ -3,11 +3,11 @@ from typing import SupportsFloat, Any
 import numpy as np
 from gymnasium.core import ActType, ObsType, RenderFrame
 
-from Breakable_bottles import BreakableBottles
+from Unbreakable_bottles import UnbreakableBottles
 import gymnasium as gym
 
 
-class GymBreakableBottles(BreakableBottles, gym.Env):
+class GymUnbreakableBottles(UnbreakableBottles, gym.Env):
     metadata = {'render.modes': ['human']}
 
     action2string = {
@@ -22,8 +22,8 @@ class GymBreakableBottles(BreakableBottles, gym.Env):
         "pick_up_bottle": 2
     }
 
-    def __init__(self, mode:str="scalarised", we:float=3.0):
-        super(GymBreakableBottles, self).__init__()
+    def __init__(self, mode: str = "scalarised", we: float = 3.0):
+        super(GymUnbreakableBottles, self).__init__()
         super().__init__()
         self.mode = mode
         self.we = we
@@ -32,7 +32,7 @@ class GymBreakableBottles(BreakableBottles, gym.Env):
         self.max_steps = 50
 
     def step(
-        self, action: ActType
+            self, action: ActType
     ) -> tuple[ObsType, SupportsFloat, bool, bool, dict[str, Any]]:
         if isinstance(action, int):
             action = self.action2string[action]
@@ -55,21 +55,27 @@ class GymBreakableBottles(BreakableBottles, gym.Env):
         return self.env_start(), {}
         pass
 
-if __name__ == "__main__":
-    actions = ['pick_up_bottle', 'pick_up_bottle', 'right', 'right', 'right', 'right', 'left', 'left', 'left', 'left',
-               'pick_up_bottle', 'right', 'right', 'right', 'right']
-    np.random.seed(0)
+if __name__ == '__main__':
+
+    e = UnbreakableBottles()
+
+    # testing trajectory picking up two bottles and picking bottles that dropped on the way back
+    actions = ['pick_up_bottle','pick_up_bottle', 'right', 'right', 'right', 'right','left', 'pick_up_bottle', 'left', 'pick_up_bottle', 'left', 'pick_up_bottle', 'right', 'right', 'right', 'right']
+
     # testing trajectory picking up two bottles
     # actions = ['pick_up_bottle','pick_up_bottle', 'right', 'right', 'right', 'right']
-    e = GymBreakableBottles(mode="vector")
-    obs, _ = e.reset()
-    e.render()
+
+
+    e.env_start()
+
     for a in actions:
-        obs, rewards, tm, tr, info = e.step(a)
-        e.render()
+        rewards, observation = e.env_step(a)
+        e.visualise_environment()
         print('Action:', a)
         print('Rewards:', rewards)
-        print('Observation', obs)
+        print('Observation', observation)
+        print("aaaaaaaaaaa")
+        print(e.get_state())
+        print("eeeeeeeee")
 
     print("\nIs terminal?", e.is_terminal())
-

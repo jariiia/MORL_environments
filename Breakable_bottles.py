@@ -11,7 +11,7 @@
 # element in the vector, for use by our impact-minimising agent). Again in a clean
 # implementation this should probably be calculated by the agent itself, but this
 # approach is faster for me to implement, given pressing conference deadlines
-
+import numpy as np
 # The environment consists of just 5 cells - the source and goal, and 3 cells which join
 # these. The agent starts at the source location, and has three possible actions - left,
 # right, and pick up. Pick up only works if the current location has a bottle in it, and
@@ -186,7 +186,7 @@ class BreakableBottles:
         print('----------------------------------')
 
 if __name__ == '__main__':
-
+    np.random.seed(0)
     e = BreakableBottles()
 
     # testing trajectory picking up two bottles
@@ -197,7 +197,7 @@ if __name__ == '__main__':
 
 
     e.env_start()
-
+    e.visualise_environment()
     for a in actions:
         rewards, observation = e.env_step(a)
         e.visualise_environment()

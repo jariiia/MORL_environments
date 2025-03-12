@@ -1,0 +1,28 @@
+# ppo_hyperparams.yaml
+model:
+  learning_rate:
+    type: "float"
+    low: 3e-5
+    high: 3e-3
+    log: true  # Log-uniform sampling
+    description: "Initial learning rate"
+  n_steps: 50
+  n_epochs: 10
+
+  gamma:
+    type: "float"
+    low: 0.6
+    high: 0.9
+    description: "Discount factor"
+
+  ent_coef:
+    type: "float"
+    low: 0.0005
+    high: 0.01
+    description: "Entropy regularization coefficient"
+
+experiment:
+  n_timesteps: 500000
+  n_eval_episodes: 50
+  n_envs: 5
+  log_interval: 5

@@ -35,7 +35,7 @@
 
 from numpy.random import default_rng
 
-class Environment:
+class UnbreakableBottles:
 
     NUM_CELLS = 5
     NUM_INTERMEDIATE_CELLS = NUM_CELLS -2
@@ -193,7 +193,7 @@ class Environment:
 
 if __name__ == '__main__':
 
-    e = Environment()
+    e = UnbreakableBottles()
 
     # testing trajectory picking up two bottles and picking bottles that dropped on the way back
     actions = ['pick_up_bottle','pick_up_bottle', 'right', 'right', 'right', 'right','left', 'pick_up_bottle', 'left', 'pick_up_bottle', 'left', 'pick_up_bottle', 'right', 'right', 'right', 'right']
