@@ -1,2 +1,2 @@
-from BreakableBottles import GymBreakableBottles
-from UnbreakableBottles import GymUnbreakableBottles
+from .BreakableBottles import GymBreakableBottles
+from .UnbreakableBottles import GymUnbreakableBottles

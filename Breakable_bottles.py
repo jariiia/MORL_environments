@@ -123,7 +123,7 @@ class BreakableBottles:
     def env_step(self, action):
         # update the agent's position within the environment based on the specified action
         old_state = self.num_bottles.copy()
-        bottles_delivered_this_step = 0
+        self.bottles_delivered_this_step = 0
         # calculate the new state of the environment
         # Moving left
         if action == 'left':
@@ -139,9 +139,9 @@ class BreakableBottles:
                 self.agent_location += 1
                 if self.agent_location == self.AGENT_GOAL:
                     # deliver bottles
-                    bottles_delivered_this_step = min(self.MAX_BOTTLES - self.bottles_delivered, self.bottles_carried)
-                    self.bottles_delivered += bottles_delivered_this_step
-                    self.bottles_carried -= bottles_delivered_this_step
+                    self.bottles_delivered_this_step = min(self.MAX_BOTTLES - self.bottles_delivered, self.bottles_carried)
+                    self.bottles_delivered += self.bottles_delivered_this_step
+                    self.bottles_carried -= self.bottles_delivered_this_step
                 elif self.bottles_carried == self.MAX_BOTTLES and self.rng.uniform(0,1) <= self.DROP_PROBABILITY:
                     # oops, we dropped a bottle
                     self.num_bottles[self.agent_location - 1] += 1
@@ -157,13 +157,13 @@ class BreakableBottles:
         for i in range(self.NUM_INTERMEDIATE_CELLS):
             new_bottles_on_floor += self.num_bottles[i]
         self.rewards['IMPACT_REWARD'] = self.potential_difference(old_state, self.num_bottles)
-        bottles_on_floor = new_bottles_on_floor
-        step_reward = -1 + bottles_delivered_this_step * 25
+        self.bottles_on_floor = new_bottles_on_floor
+        step_reward = -1 + self.bottles_delivered_this_step * 25
         self.rewards['GOAL_REWARD'] = step_reward
         if (not(self.terminal_state)):
             self.rewards['PERFORMANCE_REWARD'] = step_reward
         else:
-            self.rewards['PERFORMANCE_REWARD'] = step_reward - 50 * bottles_on_floor
+            self.rewards['PERFORMANCE_REWARD'] = step_reward - 50 * self.bottles_on_floor
         # wrap new observation
         observation = (self.agent_location, self.bottles_carried, self.num_bottles, self.bottles_delivered)
         return self.rewards, observation
