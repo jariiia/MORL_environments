@@ -7,7 +7,7 @@ from gymnasium.core import ObsType, RenderFrame, ActType
 from Doors import Environment
 
 
-class GymEnvironment(Environment, gym.Env):
+class GymDoors(Environment, gym.Env):
     """
     A Gymnasium environment for the Doors problem.
     """
@@ -30,14 +30,18 @@ class GymEnvironment(Environment, gym.Env):
         "toggle_door": 4,
     }
 
-    def __init__(self, mode:str="scalarised", we:float=3.0):
-        super(GymEnvironment, self).__init__()
+    def __init__(self, mode:str="scalarised", we:float=3.0, normalised_obs: bool = True):
+        super(GymDoors, self).__init__()
         super().__init__()
+        self.normalised_obs = normalised_obs
         self.mode = mode
         self.we = we
         self.env_init()
         self.step_count = 0
         self.max_steps = 50
+
+        self.observation_space = gym.spaces.Box(low=0, high=1, shape=(3,), dtype=np.float32) if self.normalised_obs else gym.spaces.MultiDiscrete([14,2,2])
+        self.action_space = gym.spaces.Discrete(5)
 
     def reset(
         self,
@@ -73,7 +77,10 @@ class GymEnvironment(Environment, gym.Env):
 
 
     def prep_obs(self, obs):
-        return np.array(obs,dtype=np.float32)/np.array([14-1, 2-1, 2-1],dtype=np.float32)
+        if self.normalised_obs:
+            return np.array(obs,dtype=np.float32)/np.array([14-1, 2-1, 2-1],dtype=np.float32)
+        else:
+            return np.array(obs,dtype=np.float32)
 
 if __name__ == '__main__':
 

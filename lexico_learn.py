@@ -17,6 +17,7 @@ from experiment_runner import ExperimentManager
 from stable_baselines3.common.buffers import MoRolloutBuffer
 from stable_baselines3.lppo import LPPO
 from envs import *
+from envs import GymDoors, GymSokoban, GymUnbreakableBottles, GymBreakableBottles
 
 
 def linear_schedule(initial_value):
@@ -32,7 +33,9 @@ env_chosen = args.env
 
 str2cls = {
     "unbreakable": GymUnbreakableBottles,
-    "breakable": GymBreakableBottles
+    "breakable": GymBreakableBottles,
+    "sokoban": GymSokoban,
+    "doors": GymDoors,
 }
 env_cls = str2cls[env_chosen]
 
